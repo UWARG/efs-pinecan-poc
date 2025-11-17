@@ -1,0 +1,11 @@
+{
+    "target_name": "single_servo_driver_rev1",
+    "board": "stml433",
+    "mcu_family": "stm32l4",
+    "hal": "stm32_hal",
+    "bootloader_offset": 16384,
+    "common_version": "latest"
+}
+// I'm thinking something like this per board to specify relevant details for the build system.
+// Could store these in each board's folder or maybe just in a common buildconfigs file in an upper level folder
+// Also could have certain compile time constants like the stuff in configdump.h rn in here instead too if we want

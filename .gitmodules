@@ -1,0 +1,6 @@
+[submodule "dsdl/dronecan-dsdl"]
+	path = dsdl/dronecan-dsdl
+	url = https://github.com/dronecan/DSDL.git
+[submodule "dsdl/dronecan-dsdlc"]
+	path = dsdl/dronecan-dsdlc
+	url = https://github.com/dronecan/dronecan_dsdlc.git
