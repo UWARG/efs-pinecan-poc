@@ -1,0 +1,46 @@
+cmake_minimum_required(VERSION 3.22)
+
+add_library(pinecan INTERFACE)
+
+# Enforce that the top-level set this
+if(NOT PINECAN_BOARD)
+    message(FATAL_ERROR "PINECAN_BOARD not set (must be defined in target BuildConfig.json)")
+endif()
+
+target_include_directories(pinecan INTERFACE
+    ${CMAKE_CURRENT_LIST_DIR}
+    ${CMAKE_CURRENT_LIST_DIR}/boards/${PINECAN_BOARD}
+)
+
+target_sources(pinecan INTERFACE
+    ${CMAKE_CURRENT_LIST_DIR}/pinecan.c
+    ${CMAKE_CURRENT_LIST_DIR}/boards/${PINECAN_BOARD}/pinecanBoard.c
+)
+
+# libcanard as a static lib
+add_library(libcanard STATIC)
+
+target_sources(libcanard PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/libcanard/Src/canard.c
+)
+
+target_include_directories(libcanard PUBLIC
+    ${CMAKE_CURRENT_LIST_DIR}/libcanard/Inc
+)
+
+target_include_directories(libcanard PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/libcanard/Src
+)
+
+# Add dsdl generated sources
+add_subdirectory(../dsdl ${CMAKE_BINARY_DIR}/dsdl) # TODO: set up clever regeneration and seperately between targets?
+
+# Consumers of pinecan automatically get libcanard linked in
+target_link_libraries(pinecan INTERFACE libcanard dsdl)
+
+# Validate that pinecan code is compatible with C standard
+if(CMAKE_C_STANDARD LESS 11)
+    message(ERROR "Generated code requires C11 or higher")
+endif()
+
+

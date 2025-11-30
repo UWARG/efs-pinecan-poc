@@ -6,11 +6,14 @@ extern TIM_HandleTypeDef htim1;
 
 static Servo_t servos[SERVO_COUNT] = {
   {
-    1U,
-    &htim1,
-    TIM_CHANNEL_1,
-    0.05,
-    0.10
+    .actuatorID = 1U,
+    .timer = &htim1,
+    .channel = TIM_CHANNEL_1,
+    .minDutyCycle = 0.05,
+    .maxDutyCycle = 0.10,
+    .minCCR = 0,
+    .maxCCR = 0,
+    .period = 0
   }
 };
 
@@ -57,7 +60,7 @@ void percentageActuation(float percentage, uint8_t actuatorID)
 
     percentage = (percentage + 1) / 2;
     uint32_t ccrValue = servos[i].minCCR + percentage * (servos[i].maxCCR - servos[i].minCCR);
-+    __HAL_TIM_SET_COMPARE(servos[i].timer, servos[i].channel, ccrValue);
+    __HAL_TIM_SET_COMPARE(servos[i].timer, servos[i].channel, ccrValue);
     return;
   }
 }

@@ -2,6 +2,7 @@
 PATHS := dronecan-dsdl/uavcan \
          dronecan-dsdl/dronecan \
          dronecan-dsdl/com \
+		 dronecan-dsdl/ardupilot \
 		 custom/warg
 
 # System Python used to *create* the venv (can be overridden: make SYS_PYTHON=python3)
