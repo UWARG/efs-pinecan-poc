@@ -102,10 +102,10 @@ int main(void)
     /* USER CODE END WHILE */
     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, GPIO_PIN_SET);
     //	printf("After LED Toggle (%d.%d)\n", BL_version[0], BL_version[1]);
-    HAL_Delay(1000);
+    HAL_Delay(200);
     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, GPIO_PIN_RESET);
     //	printf("After delay (%d.%d)\n", BL_version[0], BL_version[1]);
-    HAL_Delay(1000);
+    HAL_Delay(200);
 
     /* USER CODE BEGIN 3 */
   }

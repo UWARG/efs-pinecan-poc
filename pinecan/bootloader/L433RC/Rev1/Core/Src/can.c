@@ -34,7 +34,6 @@ struct uavcan_protocol_NodeStatus nodeStatus;
 
 static CanardInstance canard;
 static uint8_t canardMemPool[1024];
-static uint8_t hardwareID[16];
 
 /* USER CODE END 0 */
 

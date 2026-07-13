@@ -41,7 +41,7 @@ void eraseStagingFlash(void){
 	FLASH_EraseInitTypeDef erase = {0};
 	uint32_t page_error = 0;
 	// This assumes a 32kb bootloader size. (From 0x08000000 - 0x08008000)
-	uint32_t page_num = (APP_START_ADDR - FLASH_BASE_ADDR)/FLASH_PAGE_SIZE; //(0x08020000-0x08000000)/0x800; //0x800 is 2kb which is 1 page length according to data sheet
+	uint32_t page_num = (APP_START_ADDR - FLASH_BASE_ADDR)/BOOTLOADER_FLASH_PAGE_SIZE; //(0x08020000-0x08000000)/0x800; //0x800 is 2kb which is 1 page length according to data sheet
 	// Line above shows starting page for memory wipe
 	fwupdate.flash_address =  APP_START_ADDR;//0x08020000; // Need to change this maybe to make sure that bootloader is not affected
 	erase.Page = page_num;

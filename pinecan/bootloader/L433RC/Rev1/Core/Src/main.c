@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "can.h"
+#include "stm32l4xx_hal.h"
 #include "usart.h"
 #include "gpio.h"
 #include "pinecan.h"
@@ -29,7 +30,6 @@
 #include <time.h>
 #include <stdio.h>
 #include "dronecan_msgs.h"
-#include "node_config.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -49,9 +49,6 @@ extern struct uavcan_protocol_NodeStatus nodeStatus;
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-static CanardInstance canard;
-static uint8_t memory_pool[1024];
-static struct uavcan_protocol_NodeStatus node_status;
 FirmwareUpdate fwupdate;
 uint32_t testInit = 0x12345678;
 /* USER CODE END PV */
@@ -81,13 +78,6 @@ int fputc(int ch, FILE *f)
   */
 int main(void)
 {
-
-  extern uint32_t _sidata, _sdata, _edata;
-
-  volatile uint32_t flashInitValue = *(uint32_t *)&_sidata;
-  volatile uint32_t ramDataValue   = *(uint32_t *)&_sdata;
-  volatile uint32_t dataSize       = (uint32_t)&_edata - (uint32_t)&_sdata;
-
   /* USER CODE BEGIN 1 */
 	nodeStatus.health = UAVCAN_PROTOCOL_NODESTATUS_HEALTH_OK;
 	nodeStatus.mode = UAVCAN_PROTOCOL_NODESTATUS_MODE_INITIALIZATION;
@@ -123,11 +113,13 @@ int main(void)
 
   nodeStatus.mode = UAVCAN_PROTOCOL_NODESTATUS_MODE_OPERATIONAL;
 
-	for(uint8_t i = 0; i < 100000000; i++){
+  uint32_t start_time = HAL_GetTick();
+
+	while((HAL_GetTick() - start_time) <  10000){
 		if(fwupdate.node_id != 0){
 			break;
 		}
-		HAL_Delay(10);
+		HAL_Delay(1);
 //		printf("In Loop\n\r");
 		// encorporated in pinecan1ms()??  sendCANTx()
 		pinecan1ms(); //periodicCANTasks()
