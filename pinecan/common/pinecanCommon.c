@@ -400,10 +400,13 @@ CanardCANFrame* peekRxQueue() // only called outside ISR
 
 void processCanardRxQueue()
 {
-    // insert canard frame here
-    CanardCANFrame* frame = dequeueRxQueue();
-    if (frame != NULL) handleRxFrame(frame);
-    return;
+    uint8_t queueSize = rxQueue.count;
+    for (uint8_t i = 0; i < queueSize; i++) {
+        // insert canard frame here
+        CanardCANFrame* frame = dequeueRxQueue();
+        if (frame != NULL) handleRxFrame(frame);
+        return;
+    }
 }
 
 /*
@@ -420,7 +423,8 @@ PineCAN_Status pinecan1ms(void){
     uint32_t uptimeMs = getUptimeMs();
 
     PineCAN_Status retVal = PINECAN_OK;
-
+    
+    processCanardRxQueue();
     processCanardTxQueue();
 
     if(uptimeMs >= nextRunTime1Hz)
