@@ -41,7 +41,7 @@ static uint32_t getRandomRange(uint32_t min, uint32_t max){
 }
 
 void dnIdAllocateeInit(CanardInstance *ins){
-    canardSetLocalNodeID(ins, 0);
+    canardSetLocalNodeID(ins, 0); //if this is hard coded as a number other than 0 it can be recognized as a node
     _state = ALLOC_STATE_IDLE;
     if (ins == NULL){
     	return;
