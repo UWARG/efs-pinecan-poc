@@ -114,7 +114,7 @@ void handleDnIDAllocationRes(CanardInstance* ins, CanardRxTransfer* transfer){
 	}
 
 	if (!memcmp(msg.unique_id.data, _unique_id, msg.unique_id.len)) {
-		if (_state == ALLOC_STATE_WAITING_FOR_ACK_0 && msg.first_part_of_unique_id){
+		if (_state == ALLOC_STATE_WAITING_FOR_ACK_0 ){
 			_next_chunk = 1;
 			_timer_ms = 0;
 			_state = ALLOC_STATE_RANDOM_DELAY;
