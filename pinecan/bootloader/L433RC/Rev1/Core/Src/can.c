@@ -48,6 +48,9 @@ void MX_CAN1_Init(void)
   /* USER CODE BEGIN CAN1_Init 1 */
 
   /* USER CODE END CAN1_Init 1 */
+  // To make sure that bus can recover from busoff event
+  hcan1.Init.AutoBusOff = ENABLE;
+
   hcan1.Instance = CAN1;
   hcan1.Init.Prescaler = 20;
   hcan1.Init.Mode = CAN_MODE_NORMAL;

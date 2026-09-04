@@ -77,6 +77,7 @@ message("Using BuildConfig: ${PINECAN_CONFIG_KEY}")
 message("  board: ${PINECAN_BOARD}")
 message("  symbols: ${PINECAN_SYMBOL_DEFS}")
 
+string(JSON FLASH_OFFSET GET "${_symbols_obj}" FLASH_OFFSET)
 
 # ======= Build setup ========
 # Setup compiler settings
@@ -142,7 +143,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
 )
 
 # Inlucdes the file with memeory locations for the specific board
-include(${ROOT_DIR}/pinecan/bootloader/board_specific/${PINECAN_BOARD}/memory.cmake)
+include(${ROOT_DIR}/pinecan/boards/${PINECAN_BOARD}/memory.cmake)
 
 # Add project symbols (macros)
 target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
@@ -155,17 +156,12 @@ target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
     BOOTLOADER_FLASH_PAGE_SIZE=${FLASH_PAGE_SIZE}
 )
 
-# To get the specific linker vars needed to build.
-set(BOARD_DIR ${CMAKE_SOURCE_DIR}/../../board_specific/${PINECAN_BOARD})
-include(${BOARD_DIR}/memory.cmake)
-set(LINKER_SCRIPT_PATH
-    ${BOARD_DIR}/${LINKER_SCRIPT}
-)
-
 message(STATUS "LINKER_SCRIPT_PATH=${LINKER_SCRIPT_PATH}")
 
-target_link_options(${PROJECT_NAME} PRIVATE
-    -T${LINKER_SCRIPT_PATH}
+
+target_link_options(${CMAKE_PROJECT_NAME} PRIVATE
+    "-T${ROOT_DIR}/pinecan/boards/${PINECAN_BOARD}/STM32L433XX_FLASH.ld"
+    "-Wl,--defsym=FLASH_OFFSET=${FLASH_OFFSET}"
 )
 
 # Add linked libraries

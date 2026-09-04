@@ -23,13 +23,14 @@
             "SOFTWARE_MAJOR_VERSION": 1,
             "SOFTWARE_MINOR_VERSION": 0,
             "HARDWARE_MAJOR_VERSION": 2,
-            "HARDWARE_MINOR_VERSION": 0
+            "HARDWARE_MINOR_VERSION": 0,
+            "FLASH_OFFSET": 0
         },
         "toolchain": "gcc"
     },
 
-    "LED_Bootloader_rev1": {
-        "target_location": "targets/LED_Bootloader_Upload",
+    "LED4": {
+        "target_location": "targets/LED_4",
         "board": "stm32l4",
         "symbols": {
             "NODE_NAME": "LED1",
@@ -38,7 +39,9 @@
             "SOFTWARE_MAJOR_VERSION": 1,
             "SOFTWARE_MINOR_VERSION": 0,
             "HARDWARE_MAJOR_VERSION": 2,
-            "HARDWARE_MINOR_VERSION": 0
+            "HARDWARE_MINOR_VERSION": 0,
+            "USER_VECT_TAB_ADDRESS":"",
+            "FLASH_OFFSET": 131072
         },
         "toolchain": "gcc"
     }
